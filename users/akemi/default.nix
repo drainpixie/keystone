@@ -6,7 +6,6 @@ in {
     ./desktop.nix
     ./spotify.nix
     ./games.nix
-    ./temp.nix
 
     ../../common/neovim
     ../../common/cli.nix

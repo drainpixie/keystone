@@ -1,7 +1,6 @@
 _: {
   programs.nixvim.plugins = {
     lsp-format.enable = true;
-    conjure.enable = true;
 
     lsp = {
       enable = true;
@@ -13,7 +12,8 @@ _: {
         nil-ls.enable = true;
         clangd.enable = true;
         pyright.enable = true;
-        clojure-lsp.enable = true;
+        ocamllsp.enable = true;
+
         rust-analyzer = {
           enable = true;
 
@@ -41,6 +41,7 @@ _: {
         formatting = {
           just.enable = true;
           alejandra.enable = true;
+          ocamlformat.enable = true;
           clang_format.enable = true;
 
           black = {

@@ -124,7 +124,7 @@ in {
 
       # UI
       "org/gnome/desktop/interface" = {
-        font-name = "Drafting Mono Extra Light 10";
+        font-name = "Drafting Mono ExtraLight 10";
       };
 
       "org/gtk/gtk4/settings/file-chooser" = {

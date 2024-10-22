@@ -43,7 +43,7 @@
           };
         };
         font = {
-          normal.family = "Drafting Mono Extra Light";
+          normal.family = "Drafting Mono ExtraLight";
           size = 10;
         };
 

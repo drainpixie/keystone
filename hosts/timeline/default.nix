@@ -3,6 +3,7 @@
     ./audio.nix
     ./xserver.nix
     ./hardware.nix
+    ./temp.nix
 
     ../../common/system.nix
   ];
