@@ -6,14 +6,14 @@ nixos flake + home-manager for my systems
 
 names follow Puella Magi Madoka Magica
 
-- **akemi@timeline**
+### akemi@timeline
 
-  - dell latitude 5490
-  - personal laptop
-  - nixos
+- dell latitude 5490
+- personal laptop
+- nixos
 
-- **kyubey@incubator** (dead)
+### kyubey@incubator (dead)
 
-  - asus p8p67-m
-  - homeserver
-  - nixos
+- asus p8p67-m
+- homeserver
+- nixos
