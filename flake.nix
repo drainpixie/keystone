@@ -2,7 +2,7 @@
   description = "faye's nixos configuration";
 
   inputs = {
-    hooks.url = "github:cachix/pre-commit-hooks.nix";
+    hooks.url = "github:cachix/git-hooks.nix";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
 
@@ -22,7 +22,7 @@
     };
 
     faye = {
-      url = "github:drainpixie/pkgs";
+      url = "sourcehut:~pixie/hyo";
       inputs.hooks.follows = "hooks";
       inputs.nixpkgs.follows = "nixpkgs";
     };
