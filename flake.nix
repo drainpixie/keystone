@@ -51,17 +51,17 @@
 
     forAllSystems = lib.genAttrs systems;
 
-    mkSystem = host: system:
+    mkSystem = host: system: extraModules:
       lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit inputs;
         };
 
-        modules = [./hosts/${host}];
+        modules = extraModules ++ [./hosts/${host}];
       };
 
-    mkHome = user: system:
+    mkHome = user: system: extraModules:
       lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
@@ -71,39 +71,37 @@
           inherit inputs;
         };
 
-        modules = [
-          ./users/${user}
-          {
-            nixpkgs.overlays = [
-              (self: super: {
-                faye = faye.packages.${super.system};
-              })
-            ];
-          }
-        ];
+        modules =
+          extraModules
+          ++ [
+            ./users/${user}
+            {
+              nixpkgs.overlays = [
+                (self: super: {
+                  faye = faye.packages.${super.system};
+                })
+              ];
+            }
+          ];
       };
   in {
     # `nixos-rebuild switch --flake .#hostname`
     nixosConfigurations = {
       timeline =
         mkSystem "timeline" "x86_64-linux"
-        // {
-          modules = [hardware.nixosModules.dell-latitude-5520];
-        };
+        [hardware.nixosModules.dell-latitude-5520];
 
       incubator =
         mkSystem "incubator" "x86_64-linux"
-        // {
-          modules = [
-            hardware.nixosModules.common-cpu-intel-sandy-bridge
-            hardware.nixosModules.common-pc-hdd
-          ];
-        };
+        [
+          hardware.nixosModules.common-cpu-intel-sandy-bridge
+          hardware.nixosModules.common-pc-hdd
+        ];
     };
 
     # `home-manager switch --flake .#username@hostname`
     homeConfigurations = {
-      "akemi@timeline" = mkHome "akemi" "x86_64-linux";
+      "akemi@timeline" = mkHome "akemi" "x86_64-linux" [vim.homeManagerModules.nixvim];
       "kyubey@incubator" = mkHome "kyubey" "x86_64-linux";
     };
 

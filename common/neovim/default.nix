@@ -4,8 +4,6 @@
   ...
 }: {
   imports = [
-    inputs.vim.homeManagerModules.nixvim
-
     ./cmp.nix
     ./lsp.nix
     ./oil.nix
