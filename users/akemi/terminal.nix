@@ -73,22 +73,28 @@
     };
   };
 
-  home.packages = builtins.attrValues {
-    inherit
-      (pkgs)
-      wl-clipboard
-      du-dust
-      strace
-      tokei
-      koji
-      wget
-      curl
-      fd
-      ;
+  home.packages = let
+    choose = pkgs.writeShellScriptBin "choose" ''
+      echo "$@" | tr ' ' '\n' | shuf -n1
+    '';
+  in
+    builtins.attrValues {
+      inherit
+        (pkgs)
+        wl-clipboard
+        du-dust
+        strace
+        tokei
+        koji
+        wget
+        curl
+        fd
+        ;
 
-    inherit
-      (pkgs.faye)
-      gign
-      ;
-  };
+      inherit
+        (pkgs.faye)
+        gign
+        ;
+    }
+    ++ [choose];
 }
