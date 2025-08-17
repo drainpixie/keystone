@@ -58,9 +58,11 @@
         historySubstringSearch.enable = !config.shell.minimal;
 
         history = {
+          share = true;
           extended = true;
           ignoreDups = true;
           ignoreSpace = true;
+          expireDuplicatesFirst = true;
         };
 
         setOptions = [
@@ -73,6 +75,14 @@
           "AUTO_CD"
           "CORRECT"
           "NO_CASE_GLOB"
+          "SHARE_HISTORY"
+          "APPEND_HISTORY"
+          "INC_APPEND_HISTORY"
+          "HIST_IGNORE_ALL_DUPS"
+          "MENU_COMPLETE"
+          "AUTO_LIST"
+          "COMPLETE_IN_WORD"
+          "ALWAYS_TO_END"
         ];
 
         shellAliases = {
