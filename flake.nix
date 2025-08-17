@@ -64,12 +64,20 @@
           modules =
             [
               ./modules/config.nix
+
               ./systems/${opts.host}/host.nix
               ./systems/${opts.host}/hardware.nix
 
               {
+                nixpkgs.overlays = [
+                  (self: super: {
+                    faye = faye.packages.${super.system};
+                  })
+                ];
+
                 system.stateVersion = state;
               }
+
               home.nixosModules.home-manager
               {
                 home-manager = {
