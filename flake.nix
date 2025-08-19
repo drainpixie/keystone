@@ -64,7 +64,6 @@
       }:
         lib.nixosSystem {
           system = opts.architecture;
-
           specialArgs = {inherit inputs opts;};
 
           modules =
@@ -106,7 +105,7 @@
             ++ extraModules;
         };
   in {
-    # `nixos-rebuild switch --flake .#hostname`
+    # `sudo nixos-rebuild switch --flake .#hostname`
 
     nixosConfigurations.timeline = mkHost {
       extraModules = [
@@ -115,9 +114,9 @@
       ];
 
       opts = {
-        editor = "nvim";
-        user = "akemi";
         host = "timeline";
+        user = "drainpixie";
+        email = "121581793+drainpixie@users.noreply.github.com";
         architecture = "x86_64-linux";
       };
     };

@@ -10,6 +10,11 @@
       description = "The username for the host configuration.";
     };
 
+    email = lib.mkOption {
+      type = lib.types.str;
+      default = "at@noreply.me"; # tip: use noreply github email
+    };
+
     host = lib.mkOption {
       type = lib.types.str;
       default = "hostname";
@@ -30,11 +35,31 @@
   };
 
   config = {
+    fonts.fontconfig.enable = true;
     networking.hostName = opts.host;
 
     i18n.defaultLocale = "en_US.UTF-8";
     time.timeZone = "Europe/Rome";
 
-    hm.home.homeDirectory = "/home/${opts.user}";
+    hm = {
+      home.homeDirectory = "/home/${opts.user}";
+
+      sessionVariables = {
+        EDITOR = opts.editor;
+        MANPAGER = lib.mkIf (opts.editor == "nvim") "nvim +Man!";
+      };
+
+      programs = {
+        home-manager.enable = true;
+
+        git = {
+          enable = true;
+          delta.enable = true;
+
+          userName = opts.user;
+          userEmail = opts.email;
+        };
+      };
+    };
   };
 }
