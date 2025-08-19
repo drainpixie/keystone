@@ -100,6 +100,8 @@
                   };
                 };
               }
+
+              (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" opts.user])
             ]
             ++ extraModules;
         };

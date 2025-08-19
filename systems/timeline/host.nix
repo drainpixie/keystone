@@ -3,7 +3,12 @@
   pkgs,
   ...
 }: {
-  programs.zsh.enable = true;
+  imports = [
+    ../../modules/shell.nix
+  ];
+
+  shell.minimal = false;
+  shell.enable = true;
 
   time.hardwareClockInLocalTime = true;
   documentation.nixos.enable = false;
@@ -18,7 +23,6 @@
 
   users.users.${opts.user} = {
     uid = 1000;
-    shell = pkgs.zsh;
     isNormalUser = true;
     home = "/home/${opts.user}";
     initialPassword = "changeme";
