@@ -37,11 +37,5 @@
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = config.my.architecture;
 
-  virtualisation.vmVariant.virtualisation = {
-    memorySize = 4 * 1024;
-    graphics = true;
-    cores = 3;
-  };
-
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

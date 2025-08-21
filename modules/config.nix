@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: {
@@ -22,6 +23,24 @@
       type = lib.types.str;
       default = "user";
       description = "The username for the host configuration.";
+    };
+
+    docker = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable Docker support.";
+    };
+
+    bluetooth = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable Bluetooth support.";
+    };
+
+    vm = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable VM support (mostly for testing).";
     };
 
     host = lib.mkOption {
@@ -57,8 +76,29 @@
       isNormalUser = true;
       home = "/home/${config.my.user}";
       initialPassword = "changeme";
-      extraGroups = ["wheel"];
+      extraGroups = ["wheel" "audio" "video"] ++ lib.optionals config.my.docker ["docker"];
     };
+
+    hardware.bluetooth = lib.mkIf config.my.bluetooth {
+      enable = true;
+      powerOnBoot = true;
+    };
+
+    virtualisation = lib.mkMerge [
+      (lib.mkIf config.my.vm {
+        vmVariant.virtualisation = {
+          graphics = true;
+          memorySize = 4 * 1024;
+          cpuCount = 4;
+        };
+      })
+
+      (lib.mkIf config.my.docker {
+        docker = {
+          enable = true;
+        };
+      })
+    ];
 
     nix = {
       settings = {
@@ -79,21 +119,29 @@
       keyMap = "it";
     };
 
-    hm.home = {
-      homeDirectory = "/home/${config.my.user}";
-      sessionVariables = {
-        EDITOR = config.my.editor;
-        MANPAGER = lib.mkIf (config.my.editor == "nvim") "nvim +Man!";
-      };
-    };
+    hm = {
+      home = {
+        homeDirectory = "/home/${config.my.user}";
 
-    hm.programs = {
-      home-manager.enable = true;
-      git = {
-        enable = true;
-        delta.enable = true;
-        userName = config.my.git.user;
-        userEmail = config.my.git.email;
+        sessionVariables = {
+          EDITOR = config.my.editor;
+          MANPAGER = lib.mkIf (config.my.editor == "nvim") "nvim +Man!";
+        };
+
+        packages = lib.mkIf (config.my.vm || config.my.docker) [
+          pkgs.docker
+          pkgs.docker-compose
+        ];
+      };
+
+      programs = {
+        home-manager.enable = true;
+        git = {
+          enable = true;
+          delta.enable = true;
+          userName = config.my.git.user;
+          userEmail = config.my.git.email;
+        };
       };
     };
   };

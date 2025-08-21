@@ -14,6 +14,10 @@
 
     shell.minimal = false;
     shell.enable = true;
+
+    vm = true;
+    docker = true;
+    bluetooth = true;
   };
 
   time.hardwareClockInLocalTime = true;
@@ -22,20 +26,9 @@
   powerManagement.enable = true;
   services.tlp.enable = true;
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
-
   users.users.${config.my.user} = {
     description = "faye's user";
-
-    extraGroups = [
-      "audio"
-      "video"
-      "docker"
-      "networkmanager"
-    ];
+    extraGroups = ["networkmanager"];
   };
 
   boot = {
