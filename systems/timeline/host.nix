@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ../../modules/discord.nix
     ../../modules/shell.nix
     ../../modules/de.nix
   ];
@@ -17,6 +18,7 @@
 
     vm = true;
     docker = true;
+    discord = true;
     bluetooth = true;
   };
 
