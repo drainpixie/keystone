@@ -43,69 +43,11 @@
     vim,
     ...
   } @ inputs: let
-    lib = nixpkgs.lib // home.lib;
-
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
-
-    forAllSystems = lib.genAttrs systems;
-
-    mkHost = {
-      extraOpts ? {},
-      extraModules ? [],
-      ...
-    }:
-      lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-
-        modules =
-          [
-            ./modules/config.nix
-
-            ./systems/${extraOpts.host}/host.nix
-            ./systems/${extraOpts.host}/part.nix
-
-            {
-              my = extraOpts;
-
-              nixpkgs.overlays = [
-                (self: super: {
-                  faye = faye.packages.${super.system};
-                })
-              ];
-
-              system.stateVersion = "25.11";
-            }
-
-            home.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.akemi = {
-                  home.stateVersion = "25.11";
-                  imports = [
-                    ./systems/timeline/home.nix
-                    vim.homeModules.nixvim
-                  ];
-                };
-              };
-            }
-
-            (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "akemi"])
-          ]
-          ++ extraModules;
-      };
+    lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
   in {
     # `sudo nixos-rebuild switch --flake .#hostname`
 
-    nixosConfigurations.timeline = mkHost {
+    nixosConfigurations.timeline = lib.mkHost {
       extraModules = [
         hardware.nixosModules.dell-latitude-5520
         disko.nixosModules.disko
@@ -122,7 +64,7 @@
       };
     };
 
-    checks = forAllSystems (
+    checks = lib.forAllSystems (
       system: let
         lib = hooks.lib.${system};
       in {
@@ -140,7 +82,7 @@
       }
     );
 
-    devShells = forAllSystems (
+    devShells = lib.forAllSystems (
       system: let
         check = self.checks.${system}.pre-commit-check;
       in {
@@ -151,7 +93,7 @@
       }
     );
 
-    formatter = forAllSystems (
+    formatter = lib.forAllSystems (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
       in
