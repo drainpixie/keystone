@@ -6,6 +6,8 @@
 }: let
   gnome = import ./gnome.nix {inherit config pkgs lib;};
   # berry = import ./berry.nix {inherit config pkgs lib;};
+
+  st-config = pkgs.writeText "config.def.h" (builtins.readFile ./config.h);
 in {
   options.my.layout = lib.mkOption {
     type = lib.types.str;
@@ -46,65 +48,43 @@ in {
         displayManager.ly.enable = true;
       };
 
-      programs.alacritty = {
-        enable = true;
-        settings = {
-          window = {
-            padding = {
-              x = 16;
-              y = 16;
-            };
-          };
+      # todo: theme
+      hm = {
+        home.packages = builtins.attrValues {
+          inherit (pkgs) st;
+        };
 
-          font = {
-            normal.family = "Drafting Mono ExtraLight";
-            size = 10;
-          };
+        xresources.properties = {
+          "st.font" = "Drafting Mono:light:size=10:antialias=true:autohint=true";
+          "st.boldfont" = "Drafting Mono:bold:size=10";
 
-          keyboard = {
-            bindings = [
-              {
-                key = "C";
-                mods = "Control|Shift";
-                action = "Copy";
-              }
-              {
-                key = "V";
-                mods = "Control|Shift";
-                action = "Paste";
-              }
-            ];
-          };
+          "st.background" = "#ffffff";
+          "st.foreground" = "#1b1918";
+          "st.cursorColor" = "#d65d0e";
 
-          # todo: split theme in module
-          colors = {
-            primary = {
-              background = "0xf7f7f7";
-              foreground = "0x000000";
-            };
+          "st.color0" = "#f7f4e8";
+          "st.color1" = "#cc231d";
+          "st.color2" = "#98971a";
+          "st.color3" = "#d79921";
+          "st.color4" = "#458588";
+          "st.color5" = "#b16286";
+          "st.color6" = "#689d6a";
+          "st.color7" = "#1b1918";
 
-            normal = {
-              black = "0x282a2e";
-              red = "0xaa3731";
-              green = "0x448c27";
-              yellow = "0xcb9000";
-              blue = "0x325cc0";
-              magenta = "0x7a3e9d";
-              cyan = "0x0083b2";
-              white = "0x707880";
-            };
+          "st.color8" = "#eee8d5";
+          "st.color9" = "#fb4934";
+          "st.color10" = "#b8bb26";
+          "st.color11" = "#fabd2f";
+          "st.color12" = "#83a598";
+          "st.color13" = "#d3869b";
+          "st.color14" = "#8ec07c";
+          "st.color15" = "#1b1918";
 
-            bright = {
-              black = "0x373b41";
-              red = "0xf05050";
-              green = "0x60cb00";
-              yellow = "0xffbc5d";
-              blue = "0x007acc";
-              magenta = "0xe64ce6";
-              cyan = "0x00aacb";
-              white = "0xc5c8c6";
-            };
-          };
+          "st.termName" = "st-256color";
+
+          "st.borderpx" = 16;
+          "st.highlightfg" = 0;
+          "st.highlightbg" = 11;
         };
       };
     }
