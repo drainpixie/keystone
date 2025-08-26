@@ -39,7 +39,7 @@
 
   fonts = builtins.attrValues {
     inherit (pkgs) meslo-lgs-nf;
-    inherit (pkgs.my) drafting-mono beedii azuki;
+    inherit (pkgs.my) drafting-mono azuki;
   };
 
   minecraft = pkgs.prismlauncher.override {
@@ -60,7 +60,11 @@
   });
 in {
   systemd.user.startServices = "sd-switch";
-  home.packages = {inherit cli fonts minecraft insiders;};
+  home.packages =
+    cli
+    ++ apps
+    ++ fonts
+    ++ [minecraft insiders.fhs];
 
   xdg = {
     userDirs = {
