@@ -1,22 +1,34 @@
 (local {: g : opt : colorscheme} (require :core))
 (local indent-width 2)
 
-(g :mapleader " ")
-(opt :bg :light)
-(colorscheme :default)
-
 ;; indentation
-(opt :expandtab)
-(opt :smartindent)
+(opt :expandtab true)
+(opt :smartindent true)
 (opt :tabstop indent-width)
 (opt :shiftwidth indent-width)
 (opt :softtabstop indent-width)
 
 ;; line number
-(opt :number)
-(opt :relativenumber)
+(opt :number true)
+(opt :relativenumber true)
 
-;; whitespace
-(opt :list)
-(opt :listchars
-          "eol:↴,tab:→→,trail:↴,extends:↴,precedes:↴,nbsp:·")
+;; swap
+(opt :swapfile true)
+(opt :backup false)
+(opt :undofile true)
+
+;; search
+(opt :hlsearch true)
+(opt :incsearch true)
+
+;; style
+(opt :bg :light)
+(opt :wrap true)
+(opt :linebreak true)
+(colorscheme :default)
+
+;; misc
+(g :mapleader " ")
+(opt :autoread true)
+(opt :lazyredraw true)
+(opt :clipboard :unnamedplus)

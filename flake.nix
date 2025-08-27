@@ -65,6 +65,19 @@
           hooks = {
             convco.enable = true;
             alejandra.enable = true;
+
+            fnlfmt = {
+              enable = true;
+
+              name = "fnlfmt";
+              files = "\\.fnl$";
+              entry = "fnlfmt --fix";
+              types = ["text"];
+              stages = ["pre-commit"];
+              language = "system";
+              pass_filenames = true;
+            };
+
             statix = {
               enable = true;
               settings.ignore = ["/.direnv"];
@@ -80,7 +93,7 @@
       in {
         default = nixpkgs.legacyPackages.${system}.mkShell {
           inherit (check) shellHook;
-          buildInputs = check.enabledPackages;
+          buildInputs = check.enabledPackages ++ [nixpkgs.legacyPackages.${system}.fnlfmt];
         };
       }
     );
