@@ -5,4 +5,6 @@ with pkgs; {
 
   kc = callPackage ./kc.nix {};
   gign = callPackage ./gign {};
+
+  alabaster = callPackage ./alabaster {};
 }

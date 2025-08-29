@@ -43,6 +43,7 @@
       extraModules = [
         hardware.nixosModules.dell-latitude-5520
         disko.nixosModules.disko
+        vim.nixosModules.nixvim
       ];
 
       extraOpts = {
@@ -63,20 +64,9 @@
         pre-commit-check = lib.run {
           src = ./.;
           hooks = {
+            stylua.enable = true;
             convco.enable = true;
             alejandra.enable = true;
-
-            fnlfmt = {
-              enable = true;
-
-              name = "fnlfmt";
-              files = "\\.fnl$";
-              entry = "fnlfmt --fix";
-              types = ["text"];
-              stages = ["pre-commit"];
-              language = "system";
-              pass_filenames = true;
-            };
 
             statix = {
               enable = true;

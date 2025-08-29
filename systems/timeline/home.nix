@@ -40,6 +40,7 @@
   fonts = builtins.attrValues {
     inherit (pkgs) meslo-lgs-nf;
     inherit (pkgs.my) drafting-mono azuki;
+    inherit (pkgs.nerd-fonts) hasklug;
   };
 
   minecraft = pkgs.prismlauncher.override {

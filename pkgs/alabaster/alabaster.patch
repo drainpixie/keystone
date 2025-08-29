@@ -1,0 +1,35 @@
+diff --git a/colors/alabaster.lua b/colors/alabaster.lua
+index 0cb37f0..21877ef 100644
+--- a/colors/alabaster.lua
++++ b/colors/alabaster.lua
+@@ -391,7 +391,7 @@ else
+     vim.g.terminal_color_4 = "#325cc0"
+     vim.g.terminal_color_5 = "#7a3e9d"
+     vim.g.terminal_color_6 = "#0083b2"
+-    vim.g.terminal_color_7 = "#f7f7f7"
++    vim.g.terminal_color_7 = "#ffffff"
+     vim.g.terminal_color_8 = "#777777"
+     vim.g.terminal_color_9 = "#f05050"
+     vim.g.terminal_color_10 = "#60cb00"
+@@ -399,10 +399,10 @@ else
+     vim.g.terminal_color_12 = "#007acc"
+     vim.g.terminal_color_13 = "#e64ce6"
+     vim.g.terminal_color_14 = "#00aacb"
+-    vim.g.terminal_color_15 = "#f7f7f7"
++    vim.g.terminal_color_15 = "#ffffff"
+ 
+     -- colors
+-    local bg = "#f7f7f7"
++    local bg = "#ffffff"
+     local fg = "#000000"
+     local punct_fg = "#777777"
+     local def_fg = "#325cc0"
+@@ -429,7 +429,7 @@ else
+         green = "#448c27",
+         magenta = "#7a3e9d",
+         red = "#aa3731",
+-        white = "#f7f7f7",
++        white = "#ffffff",
+         yellow = "#cb9000",
+     }
+     local error = "#d13e23"

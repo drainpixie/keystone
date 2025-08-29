@@ -133,7 +133,7 @@ in {
         };
 
         "org/gnome/desktop/interface" = {
-          font-name = "Drafting Mono ExtraLight 10";
+          font-name = "Hasklug Nerd Font Mono ExtLt 10";
         };
 
         "org/gtk/gtk4/settings/file-chooser" = {

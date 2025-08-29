@@ -15,11 +15,11 @@
     de = "gnome";
     layout = "it";
 
-    shell.minimal = false;
     shell.enable = true;
+    shell.minimal = false;
 
-    # neovim.minimal = false;
-    neovim = true;
+    neovim.enable = true;
+    neovim.minimal = false;
 
     vm = true;
     docker = true;
