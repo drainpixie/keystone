@@ -46,6 +46,11 @@
         vim.nixosModules.nixvim
       ];
 
+      extraSpecialArgs = {
+        # different name to avoid conflicts
+        tools = lib;
+      };
+
       extraOpts = {
         architecture = "x86_64-linux";
 
@@ -59,20 +64,18 @@
 
     checks = lib.forAllSystems (
       system: let
-        lib = hooks.lib.${system};
+        hooksLib = hooks.lib.${system};
       in {
-        pre-commit-check = lib.run {
+        pre-commit-check = hooksLib.run {
           src = ./.;
-          hooks = {
-            stylua.enable = true;
-            convco.enable = true;
-            alejandra.enable = true;
-
-            statix = {
-              enable = true;
-              settings.ignore = ["/.direnv"];
+          hooks =
+            lib.enableMany ["stylua" "convco" "alejandra"]
+            // {
+              statix = {
+                enable = true;
+                settings.ignore = ["/.direnv"];
+              };
             };
-          };
         };
       }
     );

@@ -4,11 +4,12 @@
 }: {
   extraOpts ? {},
   extraModules ? [],
+  extraSpecialArgs ? {},
   ...
 }:
 nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
-  specialArgs = {inherit inputs;};
+  specialArgs = {inherit inputs;} // extraSpecialArgs;
 
   modules =
     [

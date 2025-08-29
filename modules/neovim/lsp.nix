@@ -1,19 +1,9 @@
 {
   config,
+  tools,
   lib,
   ...
-}: let
-  enableMany = props:
-    builtins.listToAttrs (
-      map (name: {
-        inherit name;
-        value = {
-          enable = true;
-        };
-      })
-      props
-    );
-in {
+}: {
   config = lib.mkIf config.my.neovim.enable {
     programs.nixvim = {
       plugins = {
@@ -21,7 +11,7 @@ in {
           enable = lib.mkIf (!config.my.neovim.minimal) true;
 
           servers =
-            enableMany [
+            tools.enableMany [
               "cmake"
               "ts_ls"
               "svelte"
