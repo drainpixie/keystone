@@ -8,6 +8,7 @@
 
     ../../modules/discord.nix
     ../../modules/shell.nix
+    ../../modules/steam.nix
     ../../modules/de.nix
   ];
 
@@ -22,6 +23,7 @@
     neovim.minimal = false;
 
     vm = true;
+    steam = true;
     docker = true;
     discord = true;
     bluetooth = true;
