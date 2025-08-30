@@ -1,5 +1,8 @@
 local cmp = require("cmp")
 
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, fg = "#993333" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, fg = "#9E7B1C" })
+
 cmp.setup.cmdline({ "/", "?" }, {
 	sources = {
 		{ name = "buffer" },

@@ -61,11 +61,11 @@ in {
           "st.highlightbg" = 11;
 
           "*.foreground" = "#383a42";
-          "*.background" = "#fafafa";
+          "*.background" = "#ffffff";
           "*.cursorColor" = "#cccccc";
           "*.pointerColor" = "#555555";
 
-          "*.color0" = "#fafafa";
+          "*.color0" = "#ffffff";
           "*.color1" = "#e45649";
           "*.color2" = "#50a14f";
           "*.color3" = "#c18401";
@@ -73,7 +73,7 @@ in {
           "*.color5" = "#a626a4";
           "*.color6" = "#0997b3";
           "*.color7" = "#383a42";
-          "*.color8" = "#fafafa";
+          "*.color8" = "#ffffff";
           "*.color9" = "#e45649";
           "*.color10" = "#50a14f";
           "*.color11" = "#c18401";

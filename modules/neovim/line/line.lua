@@ -1,8 +1,5 @@
 local ok, navic = pcall(require, "nvim-navic")
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "#ffffff", fg = "#000000" })
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#000000", bg = "#ffffff" })
-
 local tabline_section = nil
 if ok then
 	tabline_section = {
