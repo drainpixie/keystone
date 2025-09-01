@@ -1,3 +1,5 @@
+# note: we use a selfhosted wakaapi instance because the official one is sucky
+# and very paywalled :(
 {
   config,
   lib,
@@ -5,11 +7,14 @@
 }: {
   config = lib.mkIf (config.my.neovim.enable && !config.my.neovim.minimal) {
     programs.nixvim.plugins.wakatime.enable = true;
+    age.secrets.waka-salt = {
+      file = ../../secrets/wakapi-salt;
+      owner = "wakapi";
+      group = "wakapi";
+    };
 
-    # note: we use a selfhosted wakaapi instance because the official one is sucky
-    # and very paywalled :(
     services.wakapi = {
-      passwordSalt = "wait-for-sops";
+      passwordSaltFile = config.age.secrets.waka-salt.path;
 
       enable = true;
       database.createLocally = true;

@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }: {
   options.my = {
@@ -17,6 +18,12 @@
         default = "at@noreply.me";
         description = "The email for the git user.";
       };
+    };
+
+    age = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable age support.";
     };
 
     user = lib.mkOption {
@@ -120,20 +127,6 @@
     };
 
     hm = {
-      home = {
-        homeDirectory = "/home/${config.my.user}";
-
-        sessionVariables = {
-          EDITOR = config.my.editor;
-          MANPAGER = lib.mkIf (config.my.editor == "nvim") "nvim +Man!";
-        };
-
-        packages = lib.mkIf (config.my.vm || config.my.docker) [
-          pkgs.docker
-          pkgs.docker-compose
-        ];
-      };
-
       programs = {
         home-manager.enable = true;
         git = {
@@ -142,6 +135,20 @@
           userName = config.my.git.user;
           userEmail = config.my.git.email;
         };
+      };
+
+      home = {
+        homeDirectory = "/home/${config.my.user}";
+
+        sessionVariables = {
+          EDITOR = config.my.editor;
+          MANPAGER = lib.mkIf (config.my.editor == "nvim") "nvim +Man!";
+        };
+
+        packages = lib.mkMerge [
+          (lib.mkIf config.my.docker [pkgs.docker pkgs.docker-compose])
+          (lib.mkIf config.my.age [inputs.age.packages.${config.my.architecture}.default])
+        ];
       };
     };
   };

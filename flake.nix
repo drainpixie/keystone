@@ -20,6 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    age = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,6 +39,7 @@
     home,
     self,
     vim,
+    age,
     ...
   } @ inputs: rec {
     # `sudo nixos-rebuild switch --flake .#hostname`
@@ -41,9 +47,10 @@
 
     nixosConfigurations.timeline = lib.mkHost {
       extraModules = [
-        hardware.nixosModules.dell-latitude-5520
-        disko.nixosModules.disko
         vim.nixosModules.nixvim
+        age.nixosModules.default
+        disko.nixosModules.disko
+        hardware.nixosModules.dell-latitude-5520
       ];
 
       # different name to avoid conflicts

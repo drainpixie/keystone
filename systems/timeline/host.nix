@@ -23,17 +23,31 @@
     neovim.minimal = false;
 
     vm = true;
+    age = true;
     steam = true;
     docker = true;
     discord = true;
     bluetooth = true;
   };
 
+  age.identityPaths = ["${config.hm.home.homeDirectory}/.ssh/drainpixie"];
+
   time.hardwareClockInLocalTime = true;
   documentation.nixos.enable = false;
-  services.upower.enable = true;
   powerManagement.enable = true;
-  services.tlp.enable = true;
+
+  services = {
+    upower.enable = true;
+    tlp.enable = true;
+
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
+    };
+  };
 
   users.users.${config.my.user} = {
     description = "faye's user";
