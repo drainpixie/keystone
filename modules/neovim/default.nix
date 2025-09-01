@@ -11,6 +11,7 @@
     ./lsp.nix
     ./git.nix
     ./oil.nix
+    ./waka.nix
     ./telescope.nix
     ./toggleterm.nix
   ];

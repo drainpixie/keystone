@@ -46,10 +46,8 @@
         vim.nixosModules.nixvim
       ];
 
-      extraSpecialArgs = {
-        # different name to avoid conflicts
-        tools = lib;
-      };
+      # different name to avoid conflicts
+      extraSpecialArgs.tools = lib;
 
       extraOpts = {
         architecture = "x86_64-linux";
