@@ -13,6 +13,9 @@
 
     hm = {
       programs = {
+        gh.enable = true;
+        gh-dash.enable = true;
+
         direnv = {
           enable = true;
           enableZshIntegration = true;
