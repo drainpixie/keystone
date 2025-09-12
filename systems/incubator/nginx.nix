@@ -1,23 +1,30 @@
-{pkgs, ...}: {
+_: {
+  environment.etc."nginx/html/index.html".text = ''
+    <b>incubator</b>
+  '';
+
   services.nginx = {
-    enable = true;
-    virtualHosts."_" = {
-      root = pkgs.runCommand "www" {} ''
-        mkdir -p $out
-        cat > $out/index.html <<'HTML'
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <title>Incubator</title>
-          </head>
-          <body>
-            <h1>Hello from Nginx inside the NixOS VM</h1>
-            <p>This is a simple HTML page served by Nginx.</p>
-          </body>
-        </html>
-        HTML
-      '';
+    enable = false;
+
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    appendHttpConfig = ''
+      add_header X-Frame-Options DENY;
+      add_header X-Content-Type-Options nosniff;
+      add_header X-XSS-Protection "1; mode=block";
+    '';
+
+    virtualHosts = {
+      default = {
+        default = true;
+        root = "/etc/nginx/html";
+        locations = {
+          "/".index = "index.html";
+        };
+      };
     };
   };
 }

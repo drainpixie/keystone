@@ -68,12 +68,17 @@ in {
 
     ssh = {
       enable = true;
+      enableDefaultConfig = false;
 
       matchBlocks = {
         "*" = {
           addKeysToAgent = "yes";
         };
       };
+
+      extraConfig = ''
+        Include /etc/ssh/ssh_config.d/incubator
+      '';
     };
 
     git = {

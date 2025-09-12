@@ -61,10 +61,26 @@
         starship = {
           enable = true;
           enableZshIntegration = true;
+
           settings =
             {
-              format = "$username$directory$git_branch$character";
+              format = "$username$hostname$directory$git_branch$nix_shell$character";
               add_newline = false;
+
+              username = {
+                format = "[$user]($style)";
+                style_user = "cyan";
+                style_root = "red bold";
+                show_always = false;
+                disabled = false;
+              };
+
+              hostname = {
+                format = "[@$hostname]($style) ";
+                style = "green";
+                ssh_only = true;
+                disabled = false;
+              };
 
               directory = {
                 format = "[$path]($style) ";
@@ -79,12 +95,19 @@
                 style = "purple";
               };
 
+              nix_shell = {
+                format = "[\\(nix\\)]($style) ";
+                style = "yellow";
+                disabled = false;
+              };
+
               character = {
                 success_symbol = "[\\$](green)";
                 error_symbol = "[\\$](red)";
               };
             }
-            // lib.genAttrs ["username" "aws" "gcloud" "nodejs" "python" "rust" "golang" "php" "java" "docker_context" "package" "cmake" "conda" "dart" "deno" "dotnet" "elixir" "elm" "erlang" "helm" "julia" "kotlin" "kubernetes" "lua" "nim" "nix_shell" "ocaml" "perl" "purescript" "red" "ruby" "scala" "swift" "terraform" "vlang" "zig" "cmd_duration" "line_break" "jobs" "battery" "time" "status" "memory_usage" "env_var" "custom" "sudo" "localip"] (_: {disabled = true;});
+            # Make a disable/enableMany generic thingmajig
+            // lib.genAttrs ["aws" "gcloud" "nodejs" "python" "rust" "golang" "php" "java" "docker_context" "package" "cmake" "conda" "dart" "deno" "dotnet" "elixir" "elm" "erlang" "helm" "julia" "kotlin" "kubernetes" "lua" "nim" "ocaml" "perl" "purescript" "red" "ruby" "scala" "swift" "terraform" "vlang" "zig" "cmd_duration" "line_break" "jobs" "battery" "time" "status" "memory_usage" "env_var" "custom" "sudo" "localip"] (_: {disabled = true;});
         };
 
         zsh = {

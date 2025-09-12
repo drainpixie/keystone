@@ -30,7 +30,28 @@
     bluetooth = true;
   };
 
-  age.identityPaths = ["${config.hm.home.homeDirectory}/.ssh/drainpixie"];
+  age.identityPaths =
+    map (key: "${config.hm.home.homeDirectory}/.ssh/${key}")
+    ["drainpixie" "incubator"];
+
+  age.secrets = {
+    incubator = {
+      file = ../../secrets/incubator;
+      path = "/etc/ssh/ssh_config.d/incubator";
+      owner = "root";
+      group = "root";
+      mode = "0644";
+    };
+
+    waka-conf = {
+      path = "${config.hm.home.homeDirectory}/.wakatime.cfg";
+      file = ../../secrets/wakapi-conf;
+      owner = config.my.user;
+      group = "users";
+      mode = "777";
+    };
+  };
+
   programs.ssh.startAgent = true;
 
   time.hardwareClockInLocalTime = true;
