@@ -20,9 +20,7 @@ in {
     enableDefaultConfig = false;
 
     matchBlocks = {
-      "*" = {
-        addKeysToAgent = "yes";
-      };
+      "*".addKeysToAgent = "yes";
     };
   };
 }

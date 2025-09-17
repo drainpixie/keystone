@@ -7,7 +7,6 @@
     };
   };
 
-  # TODO: Move to Nginx/Caddy
   services.wakapi = {
     passwordSaltFile = config.age.secrets.waka-salt.path;
 
@@ -23,6 +22,9 @@
 
       server = {
         port = 8080;
+        base_path = "/wakapi";
+        listen_ipv4 = "0.0.0.0";
+        listen_ipv6 = "";
       };
 
       db = {

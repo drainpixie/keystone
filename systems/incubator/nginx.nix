@@ -3,8 +3,13 @@ _: {
     <b>incubator</b>
   '';
 
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "faye.keller06+web@gmail.com";
+  };
+
   services.nginx = {
-    enable = false;
+    enable = true;
 
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
@@ -17,12 +22,18 @@ _: {
       add_header X-XSS-Protection "1; mode=block";
     '';
 
-    virtualHosts = {
-      default = {
-        default = true;
-        root = "/etc/nginx/html";
-        locations = {
-          "/".index = "index.html";
+    virtualHosts."drainpixie.duckdns.org" = {
+      enableACME = true;
+      forceSSL = true;
+
+      root = "/etc/nginx/html";
+
+      locations = {
+        "/".index = "index.html";
+
+        "/wakapi/" = {
+          proxyPass = "http://0.0.0.0:8080/";
+          proxyWebsockets = true;
         };
       };
     };
