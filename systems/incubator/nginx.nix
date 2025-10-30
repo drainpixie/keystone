@@ -8,6 +8,8 @@ _: {
     defaults.email = "faye.keller06+web@gmail.com";
   };
 
+  systemd.services.nginx.serviceConfig.ProtectHome = false;
+
   services.nginx = {
     enable = true;
 
