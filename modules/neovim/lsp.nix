@@ -1,10 +1,13 @@
 {
   config,
   tools,
+  pkgs,
   lib,
   ...
 }: {
   config = lib.mkIf config.my.neovim.enable {
+    hm.home.packages = [pkgs.nil];
+
     programs.nixvim = {
       lsp.inlayHints.enable = true;
       diagnostic.settings = {
@@ -59,7 +62,6 @@
                 c = ["clang-format"];
                 cpp = ["clang-format"];
                 nix = ["alejandra"];
-                go = ["gofmt"];
               }
               // builtins.listToAttrs (
                 map

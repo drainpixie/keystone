@@ -7,7 +7,7 @@
       wl-clipboard
       xclip
       xsel
-      du-dust
+      dust
       strace
       tokei
       wget
