@@ -31,8 +31,8 @@
   };
 
   age.identityPaths =
-    map (key: "${config.hm.home.homeDirectory}/.ssh/${key}")
-    ["drainpixie" "incubator"];
+    ["/etc/ssh/ssh_host_ed25519_key"]
+    ++ map (key: "${config.hm.home.homeDirectory}/.ssh/${key}") ["drainpixie" "incubator"];
 
   age.secrets = {
     incubator = {
