@@ -2,12 +2,15 @@
   config,
   lib,
   ...
-}: {
-  config = lib.mkIf config.my.neovim.enable {
+}: let
+  cfg = config.my.neovim;
+  inherit (lib) mkIf;
+in {
+  config = mkIf cfg.enable {
     programs.nixvim = {
       plugins = {
         neogit = {
-          enable = lib.mkIf (!config.my.neovim.minimal) true;
+          enable = mkIf (!cfg.minimal) true;
 
           settings = {
             signs = {
@@ -61,7 +64,7 @@
         };
       };
 
-      keymaps = lib.mkIf (!config.my.neovim.minimal) [
+      keymaps = mkIf (!cfg.minimal) [
         {
           action = ":Neogit kind=auto<CR>";
           key = "<leader>g";

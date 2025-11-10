@@ -5,28 +5,30 @@
   ...
 }: let
   gnome = import ./gnome.nix {inherit config pkgs lib;};
-  # berry = import ./berry.nix {inherit config pkgs lib;};
+  cfg = config.my;
+
+  inherit (lib) mkIf mkMerge mkOption types;
 in {
-  options.my.layout = lib.mkOption {
-    type = lib.types.str;
+  options.my.layout = mkOption {
+    type = types.str;
     default = "it";
     description = "The keyboard layout to use.";
   };
 
-  options.my.de = lib.mkOption {
-    type = lib.types.enum ["gnome" "berry"];
+  options.my.de = mkOption {
+    type = types.enum ["gnome"];
     default = "gnome";
-    description = "faye's desktop environments";
+    description = "The desktop environment to use.";
   };
 
-  config = lib.mkMerge [
+  config = mkMerge [
     {
       security.rtkit.enable = true;
 
       services = {
         xserver = {
           enable = true;
-          xkb.layout = config.my.layout;
+          xkb.layout = cfg.layout;
 
           excludePackages = builtins.attrValues {
             inherit
@@ -85,6 +87,6 @@ in {
       };
     }
 
-    (lib.mkIf (config.my.de == "gnome") gnome)
+    (mkIf (cfg.de == "gnome") gnome)
   ];
 }

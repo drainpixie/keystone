@@ -2,8 +2,11 @@
   config,
   lib,
   ...
-}: {
-  config = lib.mkIf config.my.neovim.enable {
+}: let
+  cfg = config.my.neovim;
+  inherit (lib) mkIf;
+in {
+  config = mkIf cfg.enable {
     programs.nixvim = {
       plugins.oil = {
         enable = true;

@@ -108,7 +108,7 @@
               settings.ignore = ["/.direnv"];
             };
           }
-          // lib.enableMany ["stylua" "convco" "alejandra"];
+          // lib.setMany {enable = true;} ["stylua" "convco" "alejandra"];
       };
     });
 

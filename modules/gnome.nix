@@ -14,13 +14,15 @@
       rounded-window-corners-reborn
       ;
   };
+
+  inherit (lib) mkForce;
 in {
   services = {
     desktopManager.gnome.enable = true;
     gnome.gnome-keyring.enable = true;
     power-profiles-daemon.enable = true;
-    tlp.enable = lib.mkForce false;
-    gnome.gcr-ssh-agent.enable = lib.mkForce false;
+    tlp.enable = mkForce false;
+    gnome.gcr-ssh-agent.enable = mkForce false;
   };
 
   environment.gnome.excludePackages = builtins.attrValues {

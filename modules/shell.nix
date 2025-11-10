@@ -1,27 +1,30 @@
 {
   config,
+  tools,
   pkgs,
   lib,
   ...
-}: {
-  options.my.shell.minimal = lib.mkEnableOption "faye's minimal zsh configuration, now with fewer tools";
-  options.my.shell.enable = lib.mkEnableOption "faye's zsh configuration with modern CLI tools";
+}: let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.my.shell;
+in {
+  options.my.shell.minimal = mkEnableOption "faye's minimal zsh configuration with fewer tools";
+  options.my.shell.enable = mkEnableOption "faye's zsh configuration with modern CLI tools";
 
-  config = lib.mkIf config.my.shell.enable {
+  config = mkIf cfg.enable {
     programs.zsh.enable = true;
     users.users.${config.my.user}.shell = pkgs.zsh;
 
     hm = {
       programs = {
         gh.enable = true;
-        gh-dash.enable = true;
 
         direnv = {
           enable = true;
           enableZshIntegration = true;
         };
 
-        zoxide = lib.mkIf (!config.my.shell.minimal) {
+        zoxide = mkIf (!cfg.minimal) {
           enable = true;
           enableZshIntegration = true;
         };
@@ -50,7 +53,7 @@
           ];
         };
 
-        bat = lib.mkIf (!config.my.shell.minimal) {
+        bat = mkIf (!cfg.minimal) {
           enable = true;
           config = {
             theme = "ansi";
@@ -106,16 +109,15 @@
                 error_symbol = "[\\$](red)";
               };
             }
-            # Make a disable/enableMany generic thingmajig
-            // lib.genAttrs ["aws" "gcloud" "nodejs" "python" "rust" "golang" "php" "java" "docker_context" "package" "cmake" "conda" "dart" "deno" "dotnet" "elixir" "elm" "erlang" "helm" "julia" "kotlin" "kubernetes" "lua" "nim" "ocaml" "perl" "purescript" "red" "ruby" "scala" "swift" "terraform" "vlang" "zig" "cmd_duration" "line_break" "jobs" "battery" "time" "status" "memory_usage" "env_var" "custom" "sudo" "localip"] (_: {disabled = true;});
+            // tools.setMany {disabled = true;} ["aws" "gcloud" "nodejs" "python" "rust" "golang" "php" "java" "docker_context" "package" "cmake" "conda" "dart" "deno" "dotnet" "elixir" "elm" "erlang" "helm" "julia" "kotlin" "kubernetes" "lua" "nim" "ocaml" "perl" "purescript" "red" "ruby" "scala" "swift" "terraform" "vlang" "zig" "cmd_duration" "line_break" "jobs" "battery" "time" "status" "memory_usage" "env_var" "custom" "sudo" "localip"];
         };
 
         zsh = {
           enable = true;
           enableCompletion = true;
-          autosuggestion.enable = !config.my.shell.minimal;
-          syntaxHighlighting.enable = !config.my.shell.minimal;
-          historySubstringSearch.enable = !config.my.shell.minimal;
+          autosuggestion.enable = !cfg.minimal;
+          syntaxHighlighting.enable = !cfg.minimal;
+          historySubstringSearch.enable = !cfg.minimal;
 
           history = {
             share = true;
@@ -158,7 +160,7 @@
 
           shellAliases = {
             c = "clear";
-            cd = lib.mkIf (!config.my.shell.minimal) "z";
+            cd = mkIf (!cfg.minimal) "z";
             mkdir = "mkdir -pv";
 
             df = "df -h";
@@ -170,7 +172,7 @@
             rm = "rm -i";
             mv = "mv -i";
 
-            cat = lib.mkIf (!config.my.shell.minimal) "bat";
+            cat = mkIf (!cfg.minimal) "bat";
             grep = "rg --color=always --hidden --smart-case";
           };
         };

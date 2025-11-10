@@ -3,17 +3,19 @@
   tools,
   lib,
   ...
-}: {
-  config = lib.mkIf config.my.neovim.enable {
-    programs.nixvim = lib.mkMerge [
+}: let
+  inherit (lib) mkIf mkMerge;
+  cfg = config.my.neovim;
+in {
+  config = mkIf cfg.enable {
+    programs.nixvim = mkMerge [
       {
         extraConfigLua = builtins.readFile ./cmp.lua;
       }
 
-      (lib.mkIf (!config.my.neovim.minimal) {
+      (mkIf (!cfg.minimal) {
         plugins =
-          tools.enableMany
-          ["luasnip" "cmp-nvim-lsp" "cmp-buffer" "cmp-path" "cmp_luasnip" "cmp-cmdline" "cmp-emoji" "copilot-cmp"]
+          tools.setMany {enable = true;} ["luasnip" "cmp-nvim-lsp" "cmp-buffer" "cmp-path" "cmp_luasnip" "cmp-cmdline" "cmp-emoji" "copilot-cmp"]
           // {
             copilot-lua = {
               enable = true;

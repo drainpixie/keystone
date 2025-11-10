@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: {
-  options.my.discord = lib.mkEnableOption "faye's discord configuration";
+}: let
+  inherit (lib) mkIf mkEnableOption;
+in {
+  options.my.discord = mkEnableOption "faye's discord configuration";
 
-  config = lib.mkIf config.my.discord {
+  config = mkIf config.my.discord {
     hm = {
       programs.vesktop = {
         enable = true;
@@ -16,6 +18,7 @@
           hardwareAcceleration = true;
         };
       };
+
       services.arrpc.enable = true;
     };
   };

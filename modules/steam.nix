@@ -2,12 +2,14 @@
   config,
   lib,
   ...
-}: {
-  options.my.steam = lib.mkEnableOption "faye's steam configuration";
+}: let
+  inherit (lib) mkIf getName mkEnableOption;
+in {
+  options.my.steam = mkEnableOption "faye's steam configuration";
 
-  config = lib.mkIf config.my.steam {
+  config = mkIf config.my.steam {
     nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
+      builtins.elem (getName pkg) [
         "steam"
         "steam-run"
         "steam-original"

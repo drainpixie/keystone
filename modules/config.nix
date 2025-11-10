@@ -4,68 +4,71 @@
   config,
   inputs,
   ...
-}: {
+}: let
+  inherit (lib) mkIf mkMerge mkOption types optionals;
+  cfg = config.my;
+in {
   options.my = {
     git = {
-      name = lib.mkOption {
-        type = lib.types.str;
+      name = mkOption {
+        type = types.nonEmptyStr;
         default = "User Name";
-        description = "The name for the git user.";
+        description = "The name of the `git` user.";
       };
 
-      email = lib.mkOption {
-        type = lib.types.str;
+      email = mkOption {
+        type = types.nonEmptyStr;
         default = "at@noreply.me";
-        description = "The email for the git user.";
+        description = "The email of the `git` user.";
       };
     };
 
-    age = lib.mkOption {
-      type = lib.types.bool;
+    age = mkOption {
+      type = types.bool;
       default = false;
-      description = "Enable age support.";
+      description = "Enable `age` support.";
     };
 
-    user = lib.mkOption {
-      type = lib.types.str;
+    user = mkOption {
+      type = types.nonEmptyStr;
       default = "user";
-      description = "The username for the host configuration.";
+      description = "The username of the host configuration.";
     };
 
-    docker = lib.mkOption {
-      type = lib.types.bool;
+    docker = mkOption {
+      type = types.bool;
       default = false;
-      description = "Enable Docker support.";
+      description = "Enable `docker` support.";
     };
 
-    bluetooth = lib.mkOption {
-      type = lib.types.bool;
+    bluetooth = mkOption {
+      type = types.bool;
       default = false;
-      description = "Enable Bluetooth support.";
+      description = "Enable bluetooth support.";
     };
 
-    vm = lib.mkOption {
-      type = lib.types.bool;
+    vm = mkOption {
+      type = types.bool;
       default = false;
-      description = "Enable VM support (mostly for testing).";
+      description = "Enable VM support for testing purposes.";
     };
 
-    host = lib.mkOption {
-      type = lib.types.str;
+    host = mkOption {
+      type = types.nonEmptyStr;
       default = "hostname";
-      description = "The hostname for the host configuration.";
+      description = "The hostname of the host configuration.";
     };
 
-    editor = lib.mkOption {
-      type = lib.types.str;
+    editor = mkOption {
+      type = types.str;
       default = "nvim";
       description = "The default editor.";
     };
 
-    architecture = lib.mkOption {
-      type = lib.types.str;
+    architecture = mkOption {
+      type = types.nonEmptyStr;
       default = "x86_64-linux";
-      description = "The architecture.";
+      description = "The architecture of the host configuration.";
     };
   };
 
@@ -73,26 +76,26 @@
     nixpkgs.config.allowUnfreePredicate = _: true;
 
     fonts.fontconfig.enable = true;
-    networking.hostName = config.my.host;
+    networking.hostName = cfg.host;
 
     i18n.defaultLocale = "en_US.UTF-8";
     time.timeZone = "Europe/Rome";
 
-    users.users.${config.my.user} = {
+    users.users.${cfg.user} = {
       uid = 1000;
       isNormalUser = true;
-      home = "/home/${config.my.user}";
+      home = "/home/${cfg.user}";
       initialPassword = "changeme";
-      extraGroups = ["wheel" "audio" "video"] ++ lib.optionals config.my.docker ["docker"];
+      extraGroups = ["wheel" "audio" "video"] ++ optionals cfg.docker ["docker"];
     };
 
-    hardware.bluetooth = lib.mkIf config.my.bluetooth {
+    hardware.bluetooth = mkIf cfg.bluetooth {
       enable = true;
       powerOnBoot = true;
     };
 
-    virtualisation = lib.mkMerge [
-      (lib.mkIf config.my.vm {
+    virtualisation = mkMerge [
+      (mkIf cfg.vm {
         vmVariant.virtualisation = {
           graphics = true;
           cores = 4;
@@ -100,7 +103,7 @@
         };
       })
 
-      (lib.mkIf config.my.docker {
+      (mkIf cfg.docker {
         docker = {
           enable = true;
         };
@@ -112,7 +115,7 @@
         experimental-features = "nix-command flakes";
         auto-optimise-store = true;
         warn-dirty = false;
-        trusted-users = [config.my.user];
+        trusted-users = [cfg.user];
       };
       gc = {
         automatic = true;
@@ -133,8 +136,8 @@
           enable = true;
 
           settings = {
-            user = config.my.git;
-            core.editor = config.my.editor;
+            user = cfg.git;
+            core.editor = cfg.editor;
 
             color.ui = "auto";
             pull.rebase = true;
@@ -145,16 +148,16 @@
       };
 
       home = {
-        homeDirectory = "/home/${config.my.user}";
+        homeDirectory = "/home/${cfg.user}";
 
         sessionVariables = {
-          EDITOR = config.my.editor;
-          MANPAGER = lib.mkIf (config.my.editor == "nvim") "nvim +Man!";
+          EDITOR = cfg.editor;
+          MANPAGER = mkIf (cfg.editor == "nvim") "nvim +Man!";
         };
 
-        packages = lib.mkMerge [
-          (lib.mkIf config.my.docker [pkgs.docker pkgs.docker-compose])
-          (lib.mkIf config.my.age [inputs.age.packages.${config.my.architecture}.default])
+        packages = mkMerge [
+          (mkIf cfg.docker [pkgs.docker pkgs.docker-compose])
+          (mkIf cfg.age [inputs.age.packages.${cfg.architecture}.default])
         ];
       };
     };

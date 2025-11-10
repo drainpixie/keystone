@@ -4,8 +4,11 @@
   pkgs,
   lib,
   ...
-}: {
-  config = lib.mkIf config.my.neovim.enable {
+}: let
+  cfg = config.my.neovim;
+  inherit (lib) mkIf;
+in {
+  config = mkIf cfg.enable {
     hm.home.packages = [pkgs.nil];
 
     programs.nixvim = {
@@ -17,10 +20,18 @@
 
       plugins = {
         lsp = {
-          enable = lib.mkIf (!config.my.neovim.minimal) true;
+          enable = mkIf (!cfg.minimal) true;
 
           servers =
-            tools.enableMany [
+            {
+              rust_analyzer = {
+                enable = true;
+
+                installRustc = false;
+                installCargo = false;
+              };
+            }
+            // tools.setMany {enable = true;} [
               "cmake"
               "ts_ls"
               "svelte"
@@ -29,19 +40,11 @@
               "lua_ls"
               "clangd"
               "pyright"
-            ]
-            // {
-              rust_analyzer = {
-                enable = true;
-
-                installRustc = false;
-                installCargo = false;
-              };
-            };
+            ];
         };
 
         conform-nvim = {
-          enable = lib.mkIf (!config.my.neovim.minimal) true;
+          enable = mkIf (!cfg.minimal) true;
 
           settings = {
             format_on_save = {

@@ -3,7 +3,10 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.my.neovim;
+in {
   imports = [
     ./cmp
     ./line
@@ -16,10 +19,10 @@
     ./toggleterm.nix
   ];
 
-  options.my.neovim.enable = lib.mkEnableOption "faye's neovim configuration";
-  options.my.neovim.minimal = lib.mkEnableOption "minimal neovim configuration";
+  options.my.neovim.enable = mkEnableOption "faye's neovim configuration";
+  options.my.neovim.minimal = mkEnableOption "minimal neovim configuration";
 
-  config = lib.mkIf config.my.neovim.enable {
+  config = mkIf cfg.enable {
     programs.nixvim = {
       enable = true;
 
@@ -90,18 +93,18 @@
       };
 
       plugins = {
-        neocord.enable = lib.mkIf (!config.my.neovim.minimal) true;
+        neocord.enable = mkIf (!cfg.minimal) true;
         undotree.enable = true;
         treesitter.enable = true;
         nvim-autopairs.enable = true;
 
         navic = {
-          enable = lib.mkIf (!config.my.neovim.minimal) true;
+          enable = mkIf (!cfg.minimal) true;
           settings.lsp.auto_attach = true;
         };
 
         colorizer = {
-          enable = lib.mkIf (!config.my.neovim.minimal) true;
+          enable = mkIf (!cfg.minimal) true;
           settings = {
             fileTypes = ["*"];
             user_default_options.names = false;
