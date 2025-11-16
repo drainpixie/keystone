@@ -4,8 +4,9 @@
     ../../modules/shell.nix
 
     ../../modules/services/nginx.nix
-    ../../modules/services/portfolio.nix
     ../../modules/services/wakapi.nix
+    ../../modules/services/uptime.nix
+    ../../modules/services/portfolio.nix
   ];
 
   my = {
@@ -39,6 +40,7 @@
 
   rin.services = {
     nginx.enable = true;
+    uptime.enable = true;
     portfolio.enable = true;
 
     wakapi = {

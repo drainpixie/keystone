@@ -10,7 +10,7 @@
   inherit (lib) mkIf;
 in {
   options.rin.services.portfolio = tools.mkServiceOption "portfolio" {
-    port = 3001;
+    port = 3000;
     domain = "drainpixie.xyz";
   };
 
