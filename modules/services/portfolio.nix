@@ -27,7 +27,7 @@ in {
       after = ["network.target"];
 
       serviceConfig = let
-        site = inputs.website.packages.${pkgs.system}.default.outPath;
+        site = inputs.website.packages.${pkgs.stdenv.hostPlatform.system}.default.outPath;
       in {
         User = cfg.user;
         Group = cfg.group;
