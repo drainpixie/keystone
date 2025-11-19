@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    website = {
+    portfolio = {
       url = "github:drainpixie/www";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hooks.follows = "hooks";
@@ -40,7 +40,7 @@
   outputs = {
     hardware,
     nixpkgs,
-    website,
+    portfolio,
     disko,
     hooks,
     home,

@@ -7,7 +7,8 @@
   ...
 }: let
   cfg = config.rin.services.portfolio;
-  inherit (lib) mkIf;
+  portfolio = inputs.portfolio.lib.${pkgs.stdenv.hostPlatform.system};
+  inherit (lib) mkIf concatStringsSep;
 in {
   options.rin.services.portfolio = tools.mkServiceOption "portfolio" {
     port = 3000;
@@ -25,23 +26,25 @@ in {
     systemd.services.portfolio = {
       description = "my portfolio";
       after = ["network.target"];
+      wantedBy = ["multi-user.target"];
 
       serviceConfig = let
-        site = inputs.website.packages.${pkgs.stdenv.hostPlatform.system}.default.outPath;
+        site =
+          (portfolio.withEnv {
+            KUMA_URL = "https://kuma.drainpixie.xyz";
+            KUMA_SLUG = "rin";
+            NODE_ENV = "production";
+            PORT = toString cfg.port;
+          }).outPath;
       in {
         User = cfg.user;
         Group = cfg.group;
         Restart = "always";
 
         WorkingDirectory = site;
-        ExecStart = "${pkgs.nodejs_24}/bin/node ${site}/server.js";
-        Environment = [
-          "NODE_ENV=production"
-          "PORT=${toString cfg.port}"
-        ];
-      };
 
-      wantedBy = ["multi-user.target"];
+        ExecStart = "${pkgs.nodejs_24}/bin/node ${site}/server.js";
+      };
     };
 
     services.nginx.virtualHosts."${cfg.domain}".locations."/".proxyPass = "http://${cfg.host}:${toString cfg.port}/";

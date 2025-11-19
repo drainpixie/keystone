@@ -104,7 +104,7 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -286,6 +286,30 @@
         "type": "github"
       }
     },
+    "portfolio": {
+      "inputs": {
+        "hooks": [
+          "hooks"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1763496799,
+        "narHash": "sha256-V/pf+tOs3UmErv+xaQRSpXLDVhXe38XrNQV2ryBOn9I=",
+        "owner": "drainpixie",
+        "repo": "www",
+        "rev": "d94390059b82bb6518827b4da9db63f80ae34bee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "drainpixie",
+        "repo": "www",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "age": "age",
@@ -294,8 +318,8 @@
         "home": "home",
         "hooks": "hooks",
         "nixpkgs": "nixpkgs",
-        "vim": "vim",
-        "website": "website"
+        "portfolio": "portfolio",
+        "vim": "vim"
       }
     },
     "systems": {
@@ -360,7 +384,7 @@
     },
     "utils": {
       "inputs": {
-        "systems": "systems_4"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -383,7 +407,7 @@
           "nixpkgs"
         ],
         "nuschtosSearch": "nuschtosSearch",
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1763393971,
@@ -396,30 +420,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixvim",
-        "type": "github"
-      }
-    },
-    "website": {
-      "inputs": {
-        "hooks": [
-          "hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1763385661,
-        "narHash": "sha256-p7iW5lTFp2Pp28L4dEreog7TRkzAugJQ2Pqn2dWXI8E=",
-        "owner": "drainpixie",
-        "repo": "www",
-        "rev": "72e841e88d39d3f1d7b61ad87e6a44ff17c6e891",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drainpixie",
-        "repo": "www",
         "type": "github"
       }
     }
