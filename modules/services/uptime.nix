@@ -23,11 +23,9 @@ in {
         };
       };
 
-      nginx.virtualHosts.${cfg.domain} = {
-        locations."/" = {
-          proxyPass = "http://${cfg.host}:${toString cfg.port}";
-          proxyWebsockets = true;
-        };
+      nginx.virtualHosts.${cfg.domain}.locations."/" = {
+        proxyPass = "http://${cfg.host}:${toString cfg.port}";
+        proxyWebsockets = true;
       };
     };
   };

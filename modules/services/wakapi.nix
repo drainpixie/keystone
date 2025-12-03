@@ -21,41 +21,43 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.wakapi = {
-      passwordSaltFile =
-        if cfg.saltPath != null
-        then cfg.saltPath
-        else throw "wakapi.saltPath must be set when enabling wakapi service";
+    services = {
+      wakapi = {
+        passwordSaltFile =
+          if cfg.saltPath != null
+          then cfg.saltPath
+          else throw "wakapi.saltPath must be set when enabling wakapi service";
 
-      enable = true;
-      database.createLocally = true;
+        enable = true;
+        database.createLocally = true;
 
-      settings = {
-        quick_start = true;
-        security.allow_signup = false;
+        settings = {
+          quick_start = true;
+          security.allow_signup = false;
 
-        app.leaderboard_enabled = false;
-        mail.enabled = false;
+          app.leaderboard_enabled = false;
+          mail.enabled = false;
 
-        server = {
-          inherit (cfg) port;
-          listen_ipv4 = cfg.host;
-          base_path = "/";
-          listen_ipv6 = "";
-        };
+          server = {
+            inherit (cfg) port;
+            listen_ipv4 = cfg.host;
+            base_path = "/";
+            listen_ipv6 = "";
+          };
 
-        db = {
-          inherit (cfg) host user;
-          port = 5432;
-          name = cfg.user;
-          dialect = "postgres";
+          db = {
+            inherit (cfg) host user;
+            port = 5432;
+            name = cfg.user;
+            dialect = "postgres";
+          };
         };
       };
-    };
 
-    services.nginx.virtualHosts."${cfg.domain}".locations."/" = {
-      proxyWebsockets = true;
-      proxyPass = "http://${cfg.host}:${toString cfg.port}/";
+      nginx.virtualHosts.${cfg.domain}.locations."/" = {
+        proxyPass = "http://${cfg.host}:${toString cfg.port}";
+        proxyWebsockets = true;
+      };
     };
   };
 }
