@@ -9,7 +9,7 @@ in {
   config = mkIf cfg.enable {
     programs.nixvim = {
       plugins.toggleterm = {
-        enable = true;
+        enable = mkIf (!cfg.minimal) true;
 
         settings = {
           highlights.FloatBorder.link = "TelescopeBorder";
@@ -22,7 +22,7 @@ in {
         };
       };
 
-      keymaps = [
+      keymaps = mkIf (!cfg.minimal) [
         {
           action = ":ToggleTerm direction=float<CR>";
           key = ",";

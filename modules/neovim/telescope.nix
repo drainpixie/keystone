@@ -9,8 +9,8 @@ in {
   config = mkIf cfg.enable {
     programs.nixvim = {
       plugins = {
-        telescope.enable = true;
-        web-devicons.enable = true;
+        telescope.enable = mkIf (!cfg.minimal) true;
+        web-devicons.enable = mkIf (!cfg.minimal) true;
       };
 
       keymaps = [

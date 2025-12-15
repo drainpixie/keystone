@@ -94,8 +94,8 @@ in {
 
       plugins = {
         neocord.enable = mkIf (!cfg.minimal) true;
-        undotree.enable = true;
-        treesitter.enable = true;
+        undotree.enable = mkIf (!cfg.minimal) true;
+        treesitter.enable = mkIf (!cfg.minimal) true;
         nvim-autopairs.enable = true;
 
         navic = {
@@ -178,11 +178,16 @@ in {
         }
       ];
 
-      extraPlugins = builtins.attrValues {
-        inherit (pkgs.my) alabaster ori;
-      };
+      extraPlugins = builtins.filter (x: x != null) [
+        pkgs.my.alabaster
+        (
+          if !cfg.minimal
+          then pkgs.my.ori
+          else null
+        )
+      ];
 
-      extraConfigLua = ''
+      extraConfigLua = mkIf (!cfg.minimal) ''
         require('ori').setup()
       '';
     };

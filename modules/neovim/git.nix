@@ -53,7 +53,7 @@ in {
         };
 
         gitsigns = {
-          enable = true;
+          enable = mkIf (!cfg.minimal) true;
 
           settings = {
             signs = {
