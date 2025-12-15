@@ -211,11 +211,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765299411,
-        "narHash": "sha256-vTidGHL/UIP4UQIQvixPVqO6L0u66ib1Vsjj3Y8rOxQ=",
+        "lastModified": 1765819309,
+        "narHash": "sha256-fTN+IsUyymHBGU7eyugBnru6evzdjseYG17ZyVwAyDI=",
         "owner": "drainpixie",
         "repo": "marco",
-        "rev": "012754611977bfef7a29da11bc64740e32ceaca5",
+        "rev": "4974500308e648e3b0518a85797d818c469765e4",
         "type": "github"
       },
       "original": {
