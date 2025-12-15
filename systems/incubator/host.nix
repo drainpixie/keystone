@@ -5,6 +5,7 @@
 
     ../../modules/services/umami.nix
     ../../modules/services/nginx.nix
+    ../../modules/services/marco.nix
     ../../modules/services/wakapi.nix
     ../../modules/services/uptime.nix
     ../../modules/services/portfolio.nix
@@ -34,6 +35,12 @@
         group = "wakapi";
       };
 
+      marco-conf = {
+        file = ../../secrets/marco-conf;
+        owner = "marco";
+        group = "marco";
+      };
+
       umami-secret = {
         file = ../../secrets/umami-secret;
         owner = "umami";
@@ -55,6 +62,11 @@
     wakapi = {
       enable = true;
       saltPath = config.age.secrets.waka-salt.path;
+    };
+
+    marco = {
+      enable = true;
+      secretFile = config.age.secrets.marco-conf.path;
     };
 
     umami = {

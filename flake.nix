@@ -35,12 +35,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hooks.follows = "hooks";
     };
+
+    marco = {
+      url = "github:drainpixie/marco";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hooks.follows = "hooks";
+    };
   };
 
   outputs = {
+    portfolio,
     hardware,
     nixpkgs,
-    portfolio,
+    marco,
     disko,
     hooks,
     home,
@@ -89,6 +96,10 @@
           disko.nixosModules.disko
           hardware.nixosModules.common-pc
           hardware.nixosModules.common-pc-ssd
+
+          # services
+          marco.nixosModules.default
+          # portfolio.nixosModules.default
         ];
 
         extraOpts = mkExtraOpts {
