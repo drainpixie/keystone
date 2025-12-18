@@ -6,11 +6,11 @@
   lib,
   ...
 }: let
-  cfg = config.keystone.services.portfolio;
-  portfolio = inputs.portfolio.lib.${pkgs.stdenv.hostPlatform.system};
+  cfg = config.keystone.services.monolith;
+  monolith = inputs.monolith.lib.${pkgs.stdenv.hostPlatform.system};
   inherit (lib) mkIf;
 in {
-  options.keystone.services.portfolio = tools.mkServiceOption "portfolio" {
+  options.keystone.services.monolith = tools.mkServiceOption "monolith" {
     port = 3000;
     domain = "drainpixie.xyz";
   };
@@ -23,14 +23,14 @@ in {
 
     users.groups.${cfg.group} = {};
 
-    systemd.services.portfolio = {
-      description = "my portfolio";
+    systemd.services.monolith = {
+      description = "my personal website";
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
 
       serviceConfig = let
         site =
-          (portfolio.withEnv {
+          (monolith.withEnv {
             KUMA_URL = "https://kuma.drainpixie.xyz";
             KUMA_SLUG = "keystone";
             NODE_ENV = "production";

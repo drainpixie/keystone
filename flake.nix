@@ -30,8 +30,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    portfolio = {
-      url = "github:drainpixie/www";
+    monolith = {
+      url = "github:drainpixie/monolith";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hooks.follows = "hooks";
     };
@@ -44,7 +44,7 @@
   };
 
   outputs = {
-    portfolio,
+    monolith,
     hardware,
     nixpkgs,
     marco,
@@ -99,7 +99,7 @@
 
           # services
           marco.nixosModules.default
-          # portfolio.nixosModules.default
+          # monolith.nixosModules.default
         ];
 
         extraOpts = mkExtraOpts {

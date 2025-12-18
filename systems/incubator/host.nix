@@ -8,7 +8,7 @@
     ../../modules/services/marco.nix
     ../../modules/services/wakapi.nix
     ../../modules/services/uptime.nix
-    ../../modules/services/portfolio.nix
+    ../../modules/services/monolith.nix
   ];
 
   my = {
@@ -57,7 +57,7 @@
   keystone.services = {
     nginx.enable = true;
     uptime.enable = true;
-    portfolio.enable = true;
+    monolith.enable = true;
 
     wakapi = {
       enable = true;

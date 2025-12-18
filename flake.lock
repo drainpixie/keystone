@@ -224,6 +224,29 @@
         "type": "github"
       }
     },
+    "monolith": {
+      "inputs": {
+        "hooks": [
+          "hooks"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765800731,
+        "narHash": "sha256-+mjj0T+GpOVL2KiPd785+TxgB1JdxsRby+fFhJoBI+A=",
+        "owner": "drainpixie",
+        "repo": "monolith",
+        "rev": "a3c62e88162c972a4fab5549136b7e543009fe9a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "drainpixie",
+        "repo": "monolith",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1765472234,
@@ -240,29 +263,6 @@
         "type": "github"
       }
     },
-    "portfolio": {
-      "inputs": {
-        "hooks": [
-          "hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1765800731,
-        "narHash": "sha256-+mjj0T+GpOVL2KiPd785+TxgB1JdxsRby+fFhJoBI+A=",
-        "owner": "drainpixie",
-        "repo": "www",
-        "rev": "a3c62e88162c972a4fab5549136b7e543009fe9a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drainpixie",
-        "repo": "www",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "age": "age",
@@ -271,8 +271,8 @@
         "home": "home",
         "hooks": "hooks",
         "marco": "marco",
+        "monolith": "monolith",
         "nixpkgs": "nixpkgs",
-        "portfolio": "portfolio",
         "vim": "vim"
       }
     },
