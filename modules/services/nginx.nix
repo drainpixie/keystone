@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  cfg = config.rin.services.nginx;
+  cfg = config.keystone.services.nginx;
   inherit (lib) mkIf mkOption mkDefault types;
 in {
   options = {
@@ -20,7 +20,7 @@ in {
       );
     };
 
-    rin.services.nginx = tools.mkServiceOption "nginx" {
+    keystone.services.nginx = tools.mkServiceOption "nginx" {
       domain = "drainpixie.xyz";
     };
   };

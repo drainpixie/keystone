@@ -4,10 +4,10 @@
   lib,
   ...
 }: let
-  cfg = config.rin.services.umami;
+  cfg = config.keystone.services.umami;
   inherit (lib) mkIf mkOption types;
 in {
-  options.rin.services.umami = tools.mkServiceOption "umami" {
+  options.keystone.services.umami = tools.mkServiceOption "umami" {
     port = 3003;
     user = "umami";
     group = "umami";

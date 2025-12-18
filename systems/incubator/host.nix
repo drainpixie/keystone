@@ -54,7 +54,7 @@
   time.hardwareClockInLocalTime = true;
   documentation.nixos.enable = false;
 
-  rin.services = {
+  keystone.services = {
     nginx.enable = true;
     uptime.enable = true;
     portfolio.enable = true;
@@ -135,6 +135,6 @@
     allowReboot = false;
     randomizedDelaySec = "45min";
     flags = ["--update-input" "nixpkgs"];
-    flake = "github:drainpixie/rin#incubator";
+    flake = "github:drainpixie/keystone#incubator";
   };
 }

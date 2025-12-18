@@ -4,10 +4,10 @@
   lib,
   ...
 }: let
-  cfg = config.rin.services.uptime;
+  cfg = config.keystone.services.uptime;
   inherit (lib) mkIf;
 in {
-  options.rin.services.uptime = tools.mkServiceOption "uptime" {
+  options.keystone.services.uptime = tools.mkServiceOption "uptime" {
     port = 3001;
     domain = "kuma.drainpixie.xyz";
   };

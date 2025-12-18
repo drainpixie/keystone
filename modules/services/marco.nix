@@ -4,10 +4,10 @@
   lib,
   ...
 }: let
-  cfg = config.rin.services.marco;
+  cfg = config.keystone.services.marco;
   inherit (lib) types mkIf mkOption;
 in {
-  options.rin.services.marco = tools.mkServiceOption "marco" {
+  options.keystone.services.marco = tools.mkServiceOption "marco" {
     port = 3004;
 
     extraConfig.secretFile = mkOption {

@@ -4,10 +4,10 @@
   lib,
   ...
 }: let
-  cfg = config.rin.services.wakapi;
+  cfg = config.keystone.services.wakapi;
   inherit (lib) mkIf mkOption types;
 in {
-  options.rin.services.wakapi = tools.mkServiceOption "wakapi" {
+  options.keystone.services.wakapi = tools.mkServiceOption "wakapi" {
     port = 3002;
     user = "wakapi";
     group = "wakapi";

@@ -6,11 +6,11 @@
   lib,
   ...
 }: let
-  cfg = config.rin.services.portfolio;
+  cfg = config.keystone.services.portfolio;
   portfolio = inputs.portfolio.lib.${pkgs.stdenv.hostPlatform.system};
   inherit (lib) mkIf;
 in {
-  options.rin.services.portfolio = tools.mkServiceOption "portfolio" {
+  options.keystone.services.portfolio = tools.mkServiceOption "portfolio" {
     port = 3000;
     domain = "drainpixie.xyz";
   };
@@ -32,7 +32,7 @@ in {
         site =
           (portfolio.withEnv {
             KUMA_URL = "https://kuma.drainpixie.xyz";
-            KUMA_SLUG = "rin";
+            KUMA_SLUG = "keystone";
             NODE_ENV = "production";
             PORT = toString cfg.port;
           }).outPath;
