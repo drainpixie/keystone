@@ -20,6 +20,7 @@
       (pkgs.my)
       kc
       gign
+      helium
       ;
   };
 
