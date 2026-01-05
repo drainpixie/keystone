@@ -5,6 +5,7 @@
       man-pages
       man-pages-posix
       wl-clipboard
+      radicle-node
       xclip
       xsel
       dust
