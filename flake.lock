@@ -234,11 +234,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765800731,
-        "narHash": "sha256-+mjj0T+GpOVL2KiPd785+TxgB1JdxsRby+fFhJoBI+A=",
+        "lastModified": 1766090542,
+        "narHash": "sha256-HrXng760xBogzvrmQl5UO6iyb+mzwAM2qndb4S6HtG4=",
         "owner": "drainpixie",
         "repo": "monolith",
-        "rev": "a3c62e88162c972a4fab5549136b7e543009fe9a",
+        "rev": "06c93a6ad48ddc55ee8ee06fbdfbb2afa3370f1f",
         "type": "github"
       },
       "original": {
